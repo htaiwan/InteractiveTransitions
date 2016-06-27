@@ -78,6 +78,7 @@ class MasterViewController: UIViewController {
         transition.interactive = true
         performSegueWithIdentifier("details", sender: nil)
     default:
+        // pass guesture to animator
         transition.handlePan(recognizer)
     }
   }

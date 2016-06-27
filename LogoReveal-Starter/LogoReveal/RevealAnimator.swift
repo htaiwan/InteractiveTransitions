@@ -19,7 +19,21 @@ class RevealAnimator: UIPercentDrivenInteractiveTransition, UIViewControllerAnim
   weak var storedContext: UIViewControllerContextTransitioning?
 
   // you’ll pass the recognizer to handlePan() in RevealAnimator, at which point you’ll update the current progress of the transition
-  func handlePan(recognizer: UIPanGestureRecognizer) { }
+  func handlePan(recognizer: UIPanGestureRecognizer) {
+    // the translation lets you know how many points the user moved their finger on both the X and Y axes
+    let translation = recognizer.translationInView(recognizer.view!.superview!)
+    // You shouldn’t care whether the user pans to the right or to the left – that’s why you use abs()
+    var progress: CGFloat = abs(translation.x / 200.0)
+    // you cap the progress variable between 0.01 and 0.99;
+    progress = min(max(progress, 0.01), 0.99)
+
+    switch recognizer.state {
+        case .Changed:
+            updateInteractiveTransition(progress)
+        default:
+            break
+    }
+}
   
   func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
     return animationDuration
