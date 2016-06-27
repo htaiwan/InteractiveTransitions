@@ -8,12 +8,18 @@
 
 import UIKit
 
-class RevealAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+// use one of Apple’s built-in interactive animator classes: UIPercentDrivenInteractiveTransition. This class conforms to UIViewControllerInteractiveTransitioning
+class RevealAnimator: UIPercentDrivenInteractiveTransition, UIViewControllerAnimatedTransitioning {
 
+  // tell the animator whether or not it should drive the transition in an interactive fashion
+  var interactive = false
   let animationDuration = 2.0
   var operation: UINavigationControllerOperation = .Push
 
   weak var storedContext: UIViewControllerContextTransitioning?
+
+  // you’ll pass the recognizer to handlePan() in RevealAnimator, at which point you’ll update the current progress of the transition
+  func handlePan(recognizer: UIPanGestureRecognizer) { }
   
   func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
     return animationDuration
